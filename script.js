@@ -84,7 +84,13 @@ function showCalendar(month, year) {
 
 ///////////////////////DISPLAY WEEK CALENDAR//////////////////////////////////////////////////
 
-function showWeek(array) {
+function showWeek(query) {
+
+    var array = []
+    query.each(function(i,v) {
+        array.push([($(v).data('day'))])
+    })
+
     $('.sun').text('Sunday ' + array[0])
     $('.mon').text('Monday ' + array[1])
     $('.tues').text('Tuesday ' + array[2])
@@ -97,23 +103,14 @@ function showWeek(array) {
 /////////////////////////////// INITIALIZE WEEK VIEW //////////////////////////////////////////
 
 function initializeWeek() {
-    var today = $('.bg-info')
-    console.log(today)
+    var week = $('.bg-info').parent().children()
+    showWeek(week)
 }
-
-
 
 ////////////////////EVENTS////////////////////////////////////////////////////////////////////
 
 $('.week').on('click', function (e) {
     var week = $(this).parent().children()
-    var array = []
-    week.each(function(i,v) {
-        array.push([($(v).data('day'))])
-    })
-    
-    console.log(array)
-    showWeek(array)
-    
+    showWeek(week)
 })
 
