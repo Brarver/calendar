@@ -28,6 +28,8 @@ function jump() {
     showCalendar(currentMonth, currentYear);
 }
 
+///////////////////////////DISPLAY MONTH CALENDAR///////////////////////////////////////////////////////
+
 function showCalendar(month, year) {
 
     let firstDay = moment().month(month).year(year).startOf('month').day()
@@ -47,7 +49,7 @@ function showCalendar(month, year) {
     let date = 1;
     for (let i = 0; i < 6; i++) {
         // creates a table row
-        let row = $("<tr>").addClass('week' + i);
+        let row = $("<tr>")
 
         //creating individual cells, filing them up with data.
         for (let j = 0; j < 7; j++) {
@@ -61,8 +63,11 @@ function showCalendar(month, year) {
 
             else {
                 let cell = $("<td>").text(date);
+                cell.addClass('week w' + i)
+                cell.attr('data-day', month + 1 +'/'+ date)
                 if (date === today.date() && year === today.year() && month === today.month()) {
                     cell.addClass("bg-info");
+
                 } // color today's date
                 row.append(cell);
                 date++;
@@ -73,11 +78,42 @@ function showCalendar(month, year) {
 
         tbl.append(row); // appending each row into calendar body.
     }
+    initializeWeek()
 
 }
 
-////////////////////EVENTS//////////////////////////////////////////////////////////
+///////////////////////DISPLAY WEEK CALENDAR//////////////////////////////////////////////////
 
-$(document).on('click', function (e) {
-    console.log(e.target)
+function showWeek(array) {
+    $('.sun').text('Sunday ' + array[0])
+    $('.mon').text('Monday ' + array[1])
+    $('.tues').text('Tuesday ' + array[2])
+    $('.wed').text('Wednesday ' + array[3])
+    $('.thurs').text('Thursday ' + array[4])
+    $('.fri').text('Friday ' + array[5])
+    $('.sat').text('Saturday ' + array[6])
+}
+
+/////////////////////////////// INITIALIZE WEEK VIEW //////////////////////////////////////////
+
+function initializeWeek() {
+    var today = $('.bg-info')
+    console.log(today)
+}
+
+
+
+////////////////////EVENTS////////////////////////////////////////////////////////////////////
+
+$('.week').on('click', function (e) {
+    var week = $(this).parent().children()
+    var array = []
+    week.each(function(i,v) {
+        array.push([($(v).data('day'))])
+    })
+    
+    console.log(array)
+    showWeek(array)
+    
 })
+
